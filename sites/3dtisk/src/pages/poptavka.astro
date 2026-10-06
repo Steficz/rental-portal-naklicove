@@ -1,0 +1,58 @@
+---
+import Layout from '@nk/shared/components/Layout.astro'
+import { getCollection } from 'astro:content'
+const ck = (await getCollection('cenik'))[0].data
+---
+<Layout title="Poptávka" accent="#C2410C" brand="3D TISK · NAKLICOVE.CZ">
+  <h1 class="display">POPTÁVKA</h1>
+  <p class="sub">Nahraj STL, dostaneš orientační odhad, potvrzení odeslání. Do 24 hodin se ozveme s finální cenou.</p>
+  <form class="tile form" id="poptavka-form" enctype="multipart/form-data" method="post" action="/api/poptavky" novalidate>
+    <span class="tile-bar"></span>
+    <div class="row"><label for="f">SOUBOR STL / 3MF (MAX 50 MB)</label><input id="f" name="file" type="file" accept=".stl,.3mf" required></div>
+    <div class="row"><label for="m">MATERIÁL</label><select id="m" name="material">{ck.materials.map(x=>`<option value="${x.id}">${x.name}</option>`)}</select></div>
+    <div class="row"><label for="v">VÝPLŇ %</label><select id="v" name="infill"><option>15</option><option>25</option><option selected>40</option><option>100</option></select></div>
+    <div class="row"><label for="vr">VRSTVA</label><select id="vr" name="layer"><option>0.12</option><option>0.16</option><option selected>0.20</option><option>0.28</option></select></div>
+    <div class="row"><label for="j">JMÉNO</label><input id="j" name="name" type="text" required autocomplete="name"></div>
+    <div class="row"><label for="e">E-MAIL</label><input id="e" name="email" type="email" required autocomplete="email"></div>
+    <div class="row"><label for="t">TELEFON (VOLITELNĚ)</label><input id="t" name="phone" type="tel" autocomplete="tel"></div>
+    <div class="row"><label for="p">POPIS – CO TO JE, NA CO TO SLUŽÍ</label><textarea id="p" name="note" rows="4"></textarea></div>
+    <div class="row ks">
+      <label class="chk"><input type="checkbox" name="gdpr" value="1" required>
+      <span>Souhlasím se zpracováním údaje pro vyřízení poptávky, viz <a href="#">Ochrana údajů</a>. STL soubor mažeme po 90 dnech.</span></label>
+    </div>
+    <div class="row"><button type="submit" id="odeslat">ODESLAT POPTÁVKU</button></div>
+    <p class="stav" id="stav" role="status" aria-live="polite"></p>
+  </form>
+</Layout>
+<style>
+  .form{padding:1.5rem;max-width:760px}
+  .row{margin-bottom:1.1rem}
+  .row label{display:block;font-size:.8rem;font-weight:700;text-transform:uppercase;margin-bottom:.4rem}
+  .row input,.row select,.row textarea{width:100%;font-family:var(--font);font-size:1rem;border:3px solid var(--ink);padding:.5rem;background:var(--bg);color:var(--ink)}
+  .ks .chk{display:flex;gap:.6rem;align-items:flex-start;text-transform:none;font-size:.85rem;font-weight:400}
+  .ks input{width:auto;margin-top:.25rem}
+  button{font-family:inherit;font-weight:800;text-transform:uppercase;border:4px solid var(--ink);background:var(--ink);color:var(--bg);box-shadow:6px 6px 0 var(--acc);padding:.8rem 1.4rem;cursor:pointer}
+  button:disabled{opacity:.5;cursor:wait}
+  .stav{font-size:.9rem;margin-top:.6rem}
+</style>
+<script>
+  // Odeslání na API; dokud API neběží, hlásí chybnou odpověď (formulář zůstane funkční UI).
+  const f=document.getElementById('poptavka-form'), st=document.getElementById('stav'), btn=document.getElementById('odeslat')
+  f.addEventListener('submit', async (e)=>{
+    e.preventDefault()
+    const file=f.file.files[0]
+    if(!file){st.textContent='Vyber soubor STL nebo 3MF.';return}
+    if(file.size>50*1024*1024){st.textContent='Soubor je větší než 50 MB.';return}
+    btn.disabled=true; st.textContent='Odesílám…'
+    try{
+      const fd=new FormData(f)
+      const r=await fetch(f.action,{method:'POST',body:fd})
+      if(!r.ok) throw new Error('HTTP '+r.status)
+      const j=await r.json()
+      st.textContent='Posláno. Odhad: '+(j.estimate||'—')+'. Potvrzení najdeš v e-mailu.'
+      f.reset()
+    }catch(err){
+      st.textContent='Nelze odeslat ('+err.message+'). Zkus to znovu, nebo napiš na e-mail v patičce.'
+    }finally{btn.disabled=false}
+  })
+</script>

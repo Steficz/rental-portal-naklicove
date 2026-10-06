@@ -1,0 +1,14 @@
+{
+  "name": "@nk/shared",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./components/Layout.astro": "./src/components/Layout.astro",
+    "./components/Card.astro": "./src/components/Card.astro",
+    "./components/CookieBar.astro": "./src/components/CookieBar.astro",
+    "./styles/tokens.css": "./src/styles/tokens.css",
+    "./legal.js": "./src/legal.js"
+  },
+  "peerDependencies": { "astro": "^5.0.0" }
+}

@@ -1,0 +1,29 @@
+:root{
+  --bg:#FFFFFF; --surface:#FFFFFF; --ink:#0A0A0A; --muted:#575757;
+  --hair:#CCCCCC; --radius:0px; --acc:#C2410C;
+  --font:'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.5}
+.page{max-width:1280px;margin:0 auto;padding:0 1.5rem}
+header.site{padding:1.5rem 0;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;align-items:center}
+.brand{font-weight:800;text-transform:uppercase;text-decoration:none;font-size:1.05rem;letter-spacing:-.02em;color:var(--ink)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+main{padding:1rem 0 3rem;min-height:60vh}
+h1.display{font-size:clamp(3rem,8vw,6rem);text-transform:uppercase;letter-spacing:-.05em;font-weight:800;line-height:1.05}
+.sub{color:var(--muted);margin:.75rem 0 2rem;font-size:clamp(1rem,2.5vw,1.15rem)}
+.stamp{display:inline-block;border:3px solid var(--ink);padding:.3rem .8rem;font-weight:800;text-transform:uppercase;transform:rotate(-1.5deg);background:var(--ink);color:var(--bg);margin-bottom:1.5rem}
+.tiles{display:grid;gap:1.5rem;grid-template-columns:1fr 1fr;margin-top:.5rem}
+.tiles>.tile:first-child{grid-column:span 2}
+@media(max-width:640px){.tiles{grid-template-columns:1fr}.tiles>.tile:first-child{grid-column:span 1}}
+.tile{position:relative;border:4px solid var(--ink);box-shadow:6px 6px 0 var(--hair);padding:1.5rem 1.5rem 1.5rem 2rem;background:var(--surface)}
+.tile-bar{position:absolute;left:0;top:0;bottom:0;width:8px}
+.tile-header{display:flex;align-items:center;gap:1rem;margin-bottom:.75rem}
+.tile-icon{width:64px;height:64px;flex:0 0 64px;color:var(--ink)}
+.tile h2{font-size:clamp(1.4rem,3vw,2rem);text-transform:uppercase;font-weight:800}
+.tile p{margin-bottom:.75rem;max-width:60ch}
+.tile a{font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem}
+footer.site{border-top:4px solid var(--ink);padding:2rem 1rem 3rem;text-align:center;font-size:.9rem;margin-top:2rem}
+footer.site .legal{margin-top:.6rem}
+footer.site .legal a{margin:0 .5rem;text-underline-offset:3px}

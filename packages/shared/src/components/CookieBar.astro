@@ -1,0 +1,65 @@
+<div id="cookie-bar" class="cb" role="region" aria-label="Souhlas s cookies" hidden>
+  <div class="cb-inner">
+    <div class="cb-text">
+      <strong>COOKIES</strong>
+      <p>Nepoužíváme nic kromě nezbytných technických ukládání. Analytiku a marketing zapnete jen vy, a kdykoli je zase vypnete. Detaily: stránka Cookies.</p>
+    </div>
+    <div class="cb-actions">
+      <button type="button" data-consent="all">Přijmout vše</button>
+      <button type="button" data-consent="necessary">Pouze nezbytné</button>
+      <button type="button" data-consent="settings">Nastavení</button>
+    </div>
+    <div id="cb-settings" hidden>
+      <label><input type="checkbox" id="cb-analytics" /> Analytika</label>
+      <label><input type="checkbox" id="cb-marketing" /> Marketing</label>
+      <div class="cb-actions">
+        <button type="button" data-consent="save">Uložit</button>
+        <button type="button" data-consent="necessary">Odmítnout vše</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .cb{position:fixed;left:0;right:0;bottom:0;background:var(--ink,#0A0A0A);color:#FFF;border-top:4px solid #0A0A0A;font-family:'JetBrains Mono',monospace;z-index:50}
+  .cb[hidden]{display:none}
+  .cb-inner{max-width:1280px;margin:0 auto;padding:1rem 1.5rem;display:flex;gap:1.5rem;flex-wrap:wrap;align-items:center}
+  .cb-text{flex:1 1 340px}
+  .cb-text p{font-size:.85rem;margin-top:.3rem;max-width:80ch}
+  .cb button{font-family:inherit;font-weight:700;background:#FFF;color:#0A0A0A;border:3px solid #FFF;box-shadow:4px 4px 0 #C2410C;padding:.5rem .9rem;cursor:pointer;text-transform:uppercase;font-size:.8rem}
+  .cb button:hover{background:#0A0A0A;color:#FFF}
+  .cb-actions{display:flex;gap:.75rem;flex-wrap:wrap}
+  #cb-settings{width:100%;display:flex;gap:1.25rem;align-items:center;flex-wrap:wrap}
+  #cb-settings label{display:flex;gap:.4rem;align-items:center;font-size:.9rem}
+</style>
+
+<script>
+  ;(function () {
+    var KEY = 'nk_consent'
+    function load () {
+      try { return JSON.parse(localStorage.getItem(KEY)) } catch (e) { return null }
+    }
+    function save (categories) {
+      localStorage.setItem(KEY, JSON.stringify({ v: 1, categories: categories, ts: new Date().toISOString(), lang: 'cs' }))
+    }
+    var bar = document.getElementById('cookie-bar')
+    var settings = document.getElementById('cb-settings')
+    var aChk = document.getElementById('cb-analytics')
+    var mChk = document.getElementById('cb-marketing')
+    if (!bar) return
+    if (!load()) bar.hidden = false
+    bar.addEventListener('click', function (e) {
+      var btn = e.target.closest('button[data-consent]')
+      if (!btn) return
+      var mode = btn.getAttribute('data-consent')
+      if (mode === 'settings') { settings.hidden = false; return }
+      if (mode === 'save') { save({ necessary: true, analytics: !!aChk.checked, marketing: !!mChk.checked }) }
+      else if (mode === 'all') { save({ necessary: true, analytics: true, marketing: true }) }
+      else { save({ necessary: true, analytics: false, marketing: false }) }
+      bar.hidden = true
+    })
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && settings && !settings.hidden) settings.hidden = true
+    })
+  })()
+</script>

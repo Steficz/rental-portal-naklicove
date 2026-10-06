@@ -1,0 +1,65 @@
+---
+import Layout from '@nk/shared/components/Layout.astro'
+import { getCollection } from 'astro:content'
+
+const dom = (await getCollection('domov'))[0]
+const ck = (await getCollection('cenik'))[0].data
+---
+<Layout title={dom.data.title} accent="#C2410C" brand="3D TISK · NAKLICOVE.CZ">
+  <div slot="header-extra" />
+  <span slot="header-extra" class="stamp" style="margin:0">PRAHA 9 · 3D TISK</span>
+  <h1 class="display">{dom.data.title}</h1>
+  <p class="sub">{dom.data.intro}</p>
+
+  <section>
+    <h2 class="sec">CO DĚLÁME</h2>
+    <div class="tiles" style="margin-top:1rem">
+      <div class="tile"><span class="tile-bar"></span><h3>TISK Z PODKLADU</h3><p>Pošleš STL, vytiskneme. Než se pustíme, řekneme, jestli se to vejde a co by šlo udělat líp.</p></div>
+      <div class="tile"><span class="tile-bar"></span><h3>MODELOVÁNÍ</h3><p>Nemáš model? Postačí náčrtek, fotka nebo starší díl — vymodelujeme a rovnou vytiskneme.</p></div>
+      <div class="tile"><span class="tile-bar"></span><h3>NASTAVENÍ TISKÁRNY</h3><p>Zprovozníme a seřídíme tvou tiskárnu — v dílně, nebo u tebe.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sec">KALKULACE</h2>
+    <div id="kalkulacka" class="calc tile" style="margin-top:1rem">
+      <div class="calc-grid">
+        <label class="field"><span>STL / 3MF, MAX 50 MB</span><input type="file" accept=".stl,.3mf" /></label>
+        <label class="field"><span>MATERIÁL</span><select id="c-material">{ck.materials.map(m => `<option value="${m.id}">${m.name}</option>`)}</select></label>
+        <label class="field"><span>VRSTVA</span><select id="c-layer">{Object.keys(ck.layer_speeds).map(l => `<option value="${l}"${l==='0.20'?' selected':''}>${l} mm</option>`)}</select></label>
+        <label class="field"><span>VÝPLŇ</span><select id="c-fill"><option>15</option><option>25</option><option selected>40</option><option>100</option></select></label>
+      </div>
+      <div class="calc-out" id="c-vysledek">156 g · 4 h 20 min · 490 Kč<small>Odhad je orientační, finální cenu potvrdíme do 24 hodin.</small></div>
+    </div>
+    <p class="poznamka">Kalkulátor nahraje a spočítá soubor přímo ve tvém prohlížeči — nikam ho neposíláme. Poptávku i se souborem odešleš až v dalším kroku.</p>
+  </section>
+
+  <section>
+    <h2 class="sec">CENÍK</h2>
+    <div class="tile" style="margin-top:1rem"><span class="tile-bar"></span>
+      <div class="price">
+        {ck.materials.map(m => <div class="row"><span>{m.name}</span><span>{m.price_per_g.toFixed(2).replace('.', ',')} Kč/g</span></div>)}
+      </div>
+      <p class="poznamka">Příprava tisku {ck.fix} Kč (u zakázek nad {ck.fix_free_over_g} g ne) · Minimální zakázka {ck.min_order} Kč · Ceny bez DPH [DOPLNIT dle provozovatele]. <a href="/cenik">Podrobný ceník</a></p>
+    </div>
+  </section>
+
+  <section style="margin-top:2.5rem">
+    <a class="cta" href="/poptavka">POPTÁVKA →</a>
+  </section>
+</Layout>
+
+<style>
+  .sec{font-size:1.5rem;text-transform:uppercase;border-bottom:4px solid var(--ink);display:inline-block;padding-bottom:.2rem;margin-top:2.5rem}
+  .tiles>.tile:first-child{grid-column:auto}
+  .field span{display:block;font-size:.8rem;font-weight:700;text-transform:uppercase;margin-bottom:.4rem}
+  .calc{padding:1.5rem}
+  .calc-grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+  .calc select,.calc input[type=file]{width:100%;font-family:var(--font);font-size:1rem;border:3px solid var(--ink);padding:.45rem;background:var(--bg);color:var(--ink)}
+  .calc-out{margin-top:1.25rem;background:var(--ink);color:var(--bg);padding:1rem;text-align:center;font-size:clamp(1.2rem,3vw,1.6rem);font-weight:800}
+  .calc-out small{display:block;font-size:.85rem;font-weight:400;margin-top:.4rem;color:#DDD}
+  .price .row{display:flex;justify-content:space-between;gap:2rem;border-bottom:2px solid var(--ink);padding:.45rem .2rem;font-variant-numeric:tabular-nums}
+  .price{display:block;width:100%}
+  .poznamka{font-size:.85rem;color:var(--muted);margin-top:.8rem;max-width:75ch}
+  .cta{display:inline-block;border:4px solid var(--ink);box-shadow:6px 6px 0 var(--acc);padding:.8rem 1.6rem;text-decoration:none;font-weight:800;text-transform:uppercase;background:var(--ink);color:var(--bg)}
+</style>

@@ -1,0 +1,12 @@
+{
+  "name": "@nk/monorepo",
+  "version": "0.0.1",
+  "private": true,
+  "packageManager": "pnpm@9.12.0",
+  "scripts": {
+    "build": "pnpm -r --workspace-concurrency=1 build",
+    "dev": "pnpm --filter @nk/root dev",
+    "check": "node tools/check-content.mjs"
+  },
+  "engines": { "node": "22" }
+}

@@ -1,0 +1,22 @@
+---
+const props = Astro.props as {
+  title: string
+  desc: string
+  href: string
+  accent: string
+  label: string
+  icon?: string
+}
+// žlutá na bílé má mizerný kontrast — odkaz tmavší variantou
+const linkColor = props.accent === '#EAB308' ? '#8a6d00' : props.accent
+---
+
+<section class="tile">
+  <span class="tile-bar" style={`background:${props.accent}`}></span>
+  <div class="tile-header">
+    {props.icon && <svg class="tile-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4" aria-hidden="true" set:html={props.icon} />}
+    <h2>{props.title}</h2>
+  </div>
+  <p>{props.desc}</p>
+  <a style={`color:${linkColor}`} href={props.href}>→ {props.label}</a>
+</section>

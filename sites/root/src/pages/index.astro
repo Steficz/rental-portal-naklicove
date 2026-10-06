@@ -1,0 +1,28 @@
+---
+import Layout from '@nk/shared/components/Layout.astro'
+import Card from '@nk/shared/components/Card.astro'
+import { getCollection, render } from 'astro:content'
+
+const uvody = await getCollection('uvod')
+const services = await getCollection('sluzby')
+const uvod = uvody[0]
+const order = ['3dtisk', 'voziky', 'zkusebny']
+services.sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id))
+
+const icons: Record<string, string> = {
+  '3dtisk': '<path d="M28 6h8l6 18H22l6-18z"/><path d="M14 36h36v6H14zM14 46h36v6H14zM18 56h28"/>',
+  'voziky': '<path d="M8 20h40v20H8z"/><path d="M48 26l8 6"/><circle cx="20" cy="46" r="6"/><circle cx="40" cy="46" r="6"/>',
+  'zkusebny': '<rect x="10" y="8" width="44" height="48"/><circle cx="32" cy="22" r="8"/><circle cx="22" cy="44" r="6"/><circle cx="42" cy="44" r="6"/>'
+}
+---
+<Layout title={uvod.data.title} description={uvod.data.perex}>
+  <h1 class="display">NAKLICOVE.CZ</h1>
+  <p class="sub">{uvod.data.perex}</p>
+  <div class="stamp">PRAHA 9</div>
+  <div class="tiles">
+    {services.map(s => (
+      <Card title={s.data.title} desc={s.data.description} href={s.data.href}
+            accent={s.data.accent} label={s.data.label} icon={icons[s.id]} />
+    ))}
+  </div>
+</Layout>
