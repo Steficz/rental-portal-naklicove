@@ -8,5 +8,10 @@
     "dev": "pnpm --filter @nk/root dev",
     "check": "node tools/check-content.mjs"
   },
-  "engines": { "node": "22" }
+  "engines": {
+    "node": "22"
+  },
+  "devDependencies": {
+    "wrangler": "^4.42.0"
+  }
 }
