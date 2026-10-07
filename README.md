@@ -61,17 +61,19 @@ Ceny 3D tisku se mění **jen** v `content/3dtisk/cenik.md` (frontmatter), nikdy
 3. volitelně nový `sites/<web>/` pro subweb + Pages projekt (build/deploy commands níže)
 4. aktualizovat tento README (tabulka webů + struktura) — **pravidlo: každá změna struktury = update README**
 
-## Deploy — Cloudflare Pages (Git integrace)
+## Deploy — Cloudflare Pages + GitHub Actions
 
-Nastavení projektu: Framework Astro, env `NODE_VERSION=22`, proměnná `CLOUDFLARE_ACCOUNT_ID`
-(řetězec z URL dashboardu). Build/deploy příkazy per web:
+Projekty `nk-landing`, `nk-3dtisk`, `nk-voziky`, `nk-dodavky`, `nk-zkusebny`, `nk-hospoda`
+(účet honzicek69+cloudflare@gmail.com) běží jako **Direct upload** a nasazuje je
+`.github/workflows/deploy.yml` přes wrangler při každém pushi na main.
 
-```
-build:   pnpm --filter @nk/<adresář> build
-deploy:  npx wrangler pages deploy sites/<adresář>/dist --project-name=nk-<projekt>
-```
+Podmínka v GitHub → Settings → Secrets and variables → Actions:
+- `CF_API_TOKEN` (Cloudflare Pages: Edit)
+- `CF_ACCOUNT_ID` (7ee21d5c… — viz dashboard URL)
 
-CI na GitHubu (`ci.yml`) dělá jen kontrolní build; deploy command je práce Cloudflare.
+Build lokálně: `pnpm --filter @nk/<adresář> build` → `sites/<adresář>/dist`.
+Custom domény (naklicove.cz a subdomény) se claimsnou v Projects → Custom domains
+až bude doména registrovaná a na DNS Cloudflare.
 
 ## Plánované (neděláno)
 
