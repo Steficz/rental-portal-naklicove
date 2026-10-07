@@ -1,0 +1,30 @@
+---
+import Layout from '@nk/shared/components/Layout.astro'
+const fleet = [
+  ['VW Crafter', '8+1', 'velká prostorná dodávka, stěhování i long'],
+  ['Mercedes Sprinter', '8+1', 'osobní verze, comfort na delší trasy'],
+  ['VW Multivan', '7+1', 'menší, obratná, nízká spotřeba'],
+  ['MAN', '8+1', 'devítimístná pro větší partu'],
+  ['VW Transporter', 'skříň', 'náklad bez oken, uzamykatelný'],
+  ['MAN', 'skříň', 'skřínový MAN; varianta s řidičem na domluvu'],
+]
+---
+<Layout title="Pronájem dodávek" accent="#2563EB" brand="DODÁVKY · NAKLICOVE.CZ">
+  <span slot="header-extra" class="stamp" style="margin:0">PRAHA 9 · DODÁVKY</span>
+  <h1 class="display">PRONÁJEM DODÁVEK</h1>
+  <p class="sub">Pro přepravu osob i nákladu. Rezervace po dnech, vyzvednutí Ke Kličovu 8, Praha 9. Spouštíme — doplníme ceny a kalendář dostupnosti.</p>
+
+  <div class="tiles">
+    {fleet.map(([typ, mod, poz]) => (
+      <div class="tile"><span class="tile-bar"></span>
+        <h2>{typ}</h2>
+        <p><strong>{mod}</strong> — {poz}</p>
+      </div>
+    ))}
+  </div>
+
+  <p class="poz" style="margin-top:1.5rem">Skříňové vozy bez řidiče i <strong>s řidičem</strong> (MAN skříň). Vše pro řidičský průkaz skupiny B kromě MAN 8+1 a skříňových vozů nad 3,5 t — tam skupina C. Kauce a pojišení upřesníme při rezervaci.</p>
+</Layout>
+<style>
+  .poz{font-size:.9rem;color:var(--muted);max-width:80ch}
+</style>

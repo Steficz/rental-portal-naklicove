@@ -33,6 +33,30 @@ importers:
         specifier: ^3.23.8
         version: 3.25.76
 
+  sites/dodavky:
+    dependencies:
+      '@astrojs/sitemap':
+        specifier: ^3.2.0
+        version: 3.7.4
+      '@nk/shared':
+        specifier: workspace:*
+        version: link:../../packages/shared
+      astro:
+        specifier: ^5.0.0
+        version: 5.18.2(@types/node@24.19.1)(rollup@4.64.0)(typescript@5.9.3)
+
+  sites/hospoda:
+    dependencies:
+      '@astrojs/sitemap':
+        specifier: ^3.2.0
+        version: 3.7.4
+      '@nk/shared':
+        specifier: workspace:*
+        version: link:../../packages/shared
+      astro:
+        specifier: ^5.0.0
+        version: 5.18.2(@types/node@24.19.1)(rollup@4.64.0)(typescript@5.9.3)
+
   sites/root:
     dependencies:
       '@astrojs/sitemap':
