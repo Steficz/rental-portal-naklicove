@@ -27,4 +27,9 @@ const legal = defineCollection({
   schema: z.object({ title: z.string().optional(), operator: z.string().optional() })
 })
 
-export const collections = { domov, cenik, legal }
+const spolecne = defineCollection({
+  loader: glob({ pattern: '*.md', base: '../../content/legal/spolecne' }),
+  schema: z.object({ title: z.string().optional(), operator: z.string().optional() })
+})
+
+export const collections = { domov, cenik, legal, spolecne }

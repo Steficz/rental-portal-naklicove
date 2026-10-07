@@ -3,13 +3,13 @@ import Layout from '@nk/shared/components/Layout.astro'
 import { getCollection, render } from 'astro:content'
 
 export async function getStaticPaths() {
-  const items = await getCollection('legal')
+  const items = [...(await getCollection('legal')), ...(await getCollection('spolecne'))]
   return items.map(i => ({ params: { slug: i.id }, props: { entry: i } }))
 }
 const { entry } = Astro.props
 const { Content } = await render(entry)
 ---
-<Layout title={entry.data.title ?? 'Právní dokument'}  accent="#C2410C" terms >
+<Layout title={entry.data.title ?? 'Právní dokument'} accent="#C2410C" terms>
   <article class="legal-doc">
     <h1>{entry.data.title ?? 'Právní dokument'}</h1>
     <Content />

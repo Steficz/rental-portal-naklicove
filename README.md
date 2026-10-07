@@ -6,8 +6,9 @@ Jednotný design „styl C" (brutalismus, JetBrains Mono), subweby se liší jen
 
 Lokace: **Ke Klíčovu 263/8, Praha 9** (odkaz v patičce každého webu směřuje na Google Maps).
 Provozovatelé: `packages/shared/src/legal.js` + texty v `content/legal/<web>/`.
-Každý subweb má vlastní právní balíček (včetně Obchodních podmínek) — landing page
-v patičce nabízí jen Ochranu osobních údajů a Cookies, OC patří na subweby.
+GDPR a Cookies jsou **jeden společný dokument** pro celý portál (`content/legal/spolecne/`),
+Obchodní podmínky + povinné informace + odstoupení + reklamace jsou **vlastní per subweb**.
+Landing v patičce nabízí jen ochranu údajů a cookies; OC patří na subweby.
 
 ## Weby (6)
 
@@ -27,8 +28,10 @@ v patičce nabízí jen Ochranu osobních údajů a Cookies, OC patří na subwe
 ├── content/
 │   ├── landing/              # uvod.md + sluzby/*.md (1 soubor = 1 dlaždice)
 │   ├── 3dtisk/               # domov.md + cenik.md (strojová data kalkulátoru i ceníku)
-│   └── legal/<web>/          # právní dokumenty per subweb (6 souborů);
-│                             #   landing (root) má jen ochrana-osobnich-udaju + cookies
+│   └── legal/
+│       ├── spolecne/         # cookies.md + ochrana-osobnich-udaju.md — JEDNO znění pro celý portál
+│       └── <subweb>/         # obchodni-podminky, povinne-informace, odstoupeni, reklamace —
+│                             #   vlastní text per subweb (každý má jiného provozovatele)
 ├── sites/<web>/              # Astro 5; přidat web = nakopírovat adresář + Pages projekt
 ├── tools/check-content.mjs   # CI validace frontmatteru a odkazů
 ├── docs/                     # architektura v1/v2, obsah-workflow
