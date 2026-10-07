@@ -1,7 +1,7 @@
 # naklicove.cz — architektonický návrh v2 (po doplnění zadání)
 
 Datum: 2026-10-06 · Stav: ke schválení + doplnit vstupy §10
-Lokace: Ke Kličovu 8, Praha 9 (mezi Prosekem a Vysočany)
+Lokace: Ke Klíčovu 263/8, Praha 9 (mezi Prosekem a Vysočany)
 Rozsah: rozcestník + cca 8 subwebů, vlastní provozovatel na subweb, databáze, objednávkový kalendr po hodinách, migrace upralesa.cz
 
 ---
@@ -38,7 +38,7 @@ Data model: `resource` (typ, slot délka, ceny) → `rate_rule` (sezóny/weekend
 
 **Notifikace nova poptávka/rezervace:** 1) e-mail (spolehlivý, oficiální záznam — SMTP od hostingu nebo Resend free 3k/den), 2) Discord webhook (okamžitě, grátis, už to máš), 3) Telegram bot (free push do mobilu), 4) WhatsApp Cloud API — officiálně vyžaduje Meta Business účet + ověření firmy a schválené šablony; doporučuji až po rozjezdu, Discord+Telegram+e-mail pokryjí „okamžitě do mobilu" zadarmo.
 
-**Google služby integrace (co žádáš):** Google Calendar (rezervace — výše), Google Search Console (SEO, free, **žádné cookies**, žádný souhlas), Google Business Profile „Ke Kličovu 8" (Mapy, recenze, lokální vyhledávání — pro pronájem a dílnu klíčové), Google Maps embed na kontaktech (Consent-gated click-to-load nebo static snapshot bez osobních údajů). GA4 volitelně za souhlasem — viz §6 analytika.
+**Google služby integrace (co žádáš):** Google Calendar (rezervace — výše), Google Search Console (SEO, free, **žádné cookies**, žádný souhlas), Google Business Profile „Ke Klíčovu 263/8" (Mapy, recenze, lokální vyhledávání — pro pronájem a dílnu klíčové), Google Maps embed na kontaktech (Consent-gated click-to-load nebo static snapshot bez osobních údajů). GA4 volitelně za souhlasem — viz §6 analytika.
 
 ## 3. Hosting: Hukot vs Cloudflare Pages
 
@@ -66,7 +66,7 @@ Světlý papírový základ (#FAF7F2), oversized serifový titulek (Fraunces neb
 ### Varianta B — „Bento dílna" (modulový systém, doporučená pro rozcestník)
 Tmavý grafitový základ (#141619) nebo světlá obměna, dlaždice bento mřížky různých velikostí = each služba jeden panel s vlastní barvou akcentu, tvrdý 1px border, offset stín, Space Grotesk display + Geist Mono popisky (rozměry, ceny, parametry tisku — mono = technická důvěryhodnost). Rozcestník je samotný bento: 3–5 dlaždic podle velikosti významu. Subweby: struktura identicalní, jen výměna `--accent`. Dojem: precizní, strojně, „vidíš že tomu rozumíš". Nejlepší pro prezentaci služeb s parametry (3D). Logo: NK monogram v dlaždici + geometrická ikona.
 
-### Varianta C — „Ke Kličovu" (raw brutalism, maximální odlišení)
+### Varianta C — „Ke Klíčovu" (raw brutalism, maximální odlišení)
 Syrová bílá/černá, monospace všude (JetBrains Mono), silné 4px black borders, barevné srážky (akcent + clash), rozbité gridy, rotované popisky, razítka, viditelná struktura. Rozcestník = „dispečerská tabule" line list s odkazy. Dojem: nezapomenutelný, lidský, protidigital („AI tohle nedělá"), skvělý pro zkušebny a punkovou kapelu. Riziko: na konzervativní zákazníky (rodiny, firmy) působí tvrdě; ubytování by chtělo změkčit. Nedoporučuji jako default pro všechny weby, jako experiment ano. Logo: razítkový / stencil monogram.
 
 Společné prvky všech variant: identická navigace + patička (odkaz na rozcestník „naklicove.cz" jako DOM), cookie bar stylově sladěný, loga subdomen dílčí viz §4.5, responzivita mobile-first, prefetch odkazů, 0 zbytečného JS.

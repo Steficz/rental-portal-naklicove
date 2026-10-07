@@ -4,7 +4,10 @@ Rozcestník **naklicove.cz** a jeho subweby. Bez CMS: veškerý text žije v `co
 úprava obsahu = commit na `main` → Cloudflare Pages sám nasadí.
 Jednotný design „styl C" (brutalismus, JetBrains Mono), subweby se liší jen akcentní barvou.
 
-Lokace: Ke Kličovu 8, Praha 9 · Provozovatelé: viz [docs/obsah-workflow.md](docs/obsah-workflow.md) + `packages/shared/src/legal.js`.
+Lokace: **Ke Klíčovu 263/8, Praha 9** (odkaz v patičce každého webu směřuje na Google Maps).
+Provozovatelé: `packages/shared/src/legal.js` + texty v `content/legal/<web>/`.
+Každý subweb má vlastní právní balíček (včetně Obchodních podmínek) — landing page
+v patičce nabízí jen Ochranu osobních údajů a Cookies, OC patří na subweby.
 
 ## Weby (6)
 
@@ -17,8 +20,6 @@ Lokace: Ke Kličovu 8, Praha 9 · Provozovatelé: viz [docs/obsah-workflow.md](d
 | zkusebny.naklicove.cz | `sites/zkusebny` | `nk-zkusebny` | brzy otevřeno |
 | hospoda.naklicove.cz | `sites/hospoda` | `nk-hospoda` | brzy otevřeno |
 
-`upralesa.cz` běží zatím odděleně (WP hosting) — nebude dlaždicí rozcestníku.
-
 ## Struktura
 
 ```
@@ -26,7 +27,8 @@ Lokace: Ke Kličovu 8, Praha 9 · Provozovatelé: viz [docs/obsah-workflow.md](d
 ├── content/
 │   ├── landing/              # uvod.md + sluzby/*.md (1 soubor = 1 dlaždice)
 │   ├── 3dtisk/               # domov.md + cenik.md (strojová data kalkulátoru i ceníku)
-│   └── legal/<provozovatel>/ # 6 právních dokumentů per provozovatel
+│   └── legal/<web>/          # právní dokumenty per subweb (6 souborů);
+│                             #   landing (root) má jen ochrana-osobnich-udaju + cookies
 ├── sites/<web>/              # Astro 5; přidat web = nakopírovat adresář + Pages projekt
 ├── tools/check-content.mjs   # CI validace frontmatteru a odkazů
 ├── docs/                     # architektura v1/v2, obsah-workflow

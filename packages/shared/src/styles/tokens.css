@@ -27,3 +27,5 @@ h1.display{font-size:clamp(3rem,8vw,6rem);text-transform:uppercase;letter-spacin
 footer.site{border-top:4px solid var(--ink);padding:2rem 1rem 3rem;text-align:center;font-size:.9rem;margin-top:2rem}
 footer.site .legal{margin-top:.6rem}
 footer.site .legal a{margin:0 .5rem;text-underline-offset:3px}
+footer.site .addr a.pin{display:inline-flex;align-items:center;gap:.4em;text-underline-offset:3px}
+footer.site .addr svg{width:1.05em;height:1.05em;flex:0 0 auto}

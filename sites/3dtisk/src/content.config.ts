@@ -22,4 +22,9 @@ const cenik = defineCollection({
   })
 })
 
-export const collections = { domov, cenik }
+const legal = defineCollection({
+  loader: glob({ pattern: '*.md', base: '../../content/legal/3dtisk' }),
+  schema: z.object({ title: z.string().optional(), operator: z.string().optional() })
+})
+
+export const collections = { domov, cenik, legal }

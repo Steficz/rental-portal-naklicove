@@ -3,7 +3,7 @@ import Layout from '@nk/shared/components/Layout.astro'
 import { getCollection } from 'astro:content'
 const ck = (await getCollection('cenik'))[0].data
 ---
-<Layout title="Poptávka" accent="#C2410C" brand="3D TISK · NAKLICOVE.CZ">
+<Layout title="Poptávka" accent="#C2410C" terms brand="3D TISK · NAKLICOVE.CZ">
   <h1 class="display">POPTÁVKA</h1>
   <p class="sub">Nahraj STL, dostaneš orientační odhad, potvrzení odeslání. Do 24 hodin se ozveme s finální cenou.</p>
   <form class="tile form" id="poptavka-form" enctype="multipart/form-data" method="post" action="/api/poptavky" novalidate>

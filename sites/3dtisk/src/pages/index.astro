@@ -5,7 +5,7 @@ import { getCollection } from 'astro:content'
 const dom = (await getCollection('domov'))[0]
 const ck = (await getCollection('cenik'))[0].data
 ---
-<Layout title={dom.data.title} accent="#C2410C" brand="3D TISK · NAKLICOVE.CZ">
+<Layout title={dom.data.title} accent="#C2410C" terms brand="3D TISK · NAKLICOVE.CZ">
   <div slot="header-extra" />
   <span slot="header-extra" class="stamp" style="margin:0">PRAHA 9 · 3D TISK</span>
   <h1 class="display">{dom.data.title}</h1>

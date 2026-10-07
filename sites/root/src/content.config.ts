@@ -18,4 +18,9 @@ const sluzby = defineCollection({
   })
 })
 
-export const collections = { uvod, sluzby }
+const legal = defineCollection({
+  loader: glob({ pattern: '*.md', base: '../../content/legal/root' }),
+  schema: z.object({ title: z.string().optional(), operator: z.string().optional() })
+})
+
+export const collections = { uvod, sluzby, legal }

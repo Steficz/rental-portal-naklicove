@@ -1,0 +1,23 @@
+---
+import Layout from '@nk/shared/components/Layout.astro'
+import { getCollection, render } from 'astro:content'
+
+export async function getStaticPaths() {
+  const items = await getCollection('legal')
+  return items.map(i => ({ params: { slug: i.id }, props: { entry: i } }))
+}
+const { entry } = Astro.props
+const { Content } = await render(entry)
+---
+<Layout title={entry.data.title ?? 'Právní dokument'}  accent="#2563EB" terms >
+  <article class="legal-doc">
+    <h1>{entry.data.title ?? 'Právní dokument'}</h1>
+    <Content />
+  </article>
+</Layout>
+<style>
+  .legal-doc{max-width:82ch;margin:2rem auto;font-size:.95rem}
+  .legal-doc h1{font-size:clamp(1.8rem,4vw,2.6rem);text-transform:uppercase;margin-bottom:1.5rem}
+  .legal-doc :is(h2,h3){text-transform:uppercase;margin:1.5rem 0 .6rem}
+  .legal-doc p{margin-bottom:.8rem}
+</style>

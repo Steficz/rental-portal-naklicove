@@ -1,12 +1,16 @@
-// Jeden zdroj pravdy pro oznakani provozovatelu. Text legal pages z content/legal/<operator>/.
+// Jeden zdroj pravdy pro označení provozovatelů. Právní texty: content/legal/<sídlo-webu>/.
 export const SPOLECNE = {
-  adresa: "Ke Kličovu 8, Praha 9",
+  adresa: "Ke Klíčovu 263/8, Praha 9",
+  maps: "https://maps.google.com/?q=Ke+Kl%C3%AD%C4%8Dovu+263%2F8%2C+Praha+9",
   domain: "naklicove.cz",
   email: "[info@naklicove.cz – DOPLNIT]"
 }
 
 export const PROVOZOVATELE = {
-  "klic-3d":      { jmeno: "[JMÉNO 1 – DOPLNIT]", ico: "[IČO]", adresa: SPOLECNE.adresa, email: "[DOPLNIT]", telefon: "[DOPLNIT]", platusceDPH: false },
-  "klic-voziky":  { jmeno: "[JMÉNO 2 – DOPLNIT]", ico: "[IČO]", adresa: SPOLECNE.adresa, email: "[DOPLNIT]", telefon: "[DOPLNIT]", platusceDPH: false },
-  "klic-zkusebny":{ jmeno: "[JMÉNO 3 – DOPLNIT]", ico: "[IČO]", adresa: SPOLECNE.adresa, email: "[DOPLNIT]", telefon: "[DOPLNIT]", platusceDPH: false }
+  "root":      { jmeno: "[JMÉNO – DOPLNIT]",  ico: "[IČO]", adresa: SPOLECNE.adresa, email: "[DOPLNIT]", telefon: "[DOPLNIT]", platenDph: false },
+  "3dtisk":    { jmeno: "[JMÉNO – DOPLNIT]",  ico: "[IČO]", adresa: SPOLECNE.adresa, email: "[DOPLNIT]", telefon: "[DOPLNIT]", platenDph: false },
+  "voziky":    { jmeno: "[JMÉNO – DOPLNIT]",  ico: "[IČO]", adresa: SPOLECNE.adresa, email: "[DOPLNIT]", telefon: "[DOPLNIT]", platenDph: false },
+  "dodavky":   { jmeno: "[JMÉNO – DOPLNIT]",  ico: "[IČO]", adresa: SPOLECNE.adresa, email: "[DOPLNIT]", telefon: "[DOPLNIT]", platenDph: false },
+  "zkusebny":  { jmeno: "[JMÉNO – DOPLNIT]",  ico: "[IČO]", adresa: SPOLECNE.adresa, email: "[DOPLNIT]", telefon: "[DOPLNIT]", platenDph: false },
+  "hospoda":   { jmeno: "[JMÉNO – DOPLNIT]",  ico: "[IČO]", adresa: SPOLECNE.adresa, email: "[DOPLNIT]", telefon: "[DOPLNIT]", platenDph: false }
 }

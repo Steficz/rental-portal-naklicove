@@ -2,17 +2,26 @@
 import '../styles/tokens.css'
 import CookieBar from './CookieBar.astro'
 
+type LegalLink = { text: string; href: string }
 const props = Astro.props as {
   title: string
   description?: string
   accent?: string
   brand?: string
   home?: string
+  terms?: boolean
+  links?: LegalLink[]
 }
-
 const accent = props.accent ?? '#C2410C'
 const brand = props.brand ?? 'NAKLICOVE.CZ'
 const home = props.home ?? 'https://naklicove.cz'
+const base: LegalLink[] = [
+  { text: 'Ochrana osobních údajů', href: '/legal/ochrana-osobnich-udaju' },
+  { text: 'Cookies', href: '/legal/cookies' },
+]
+const links = props.links ?? (props.terms ? [{ text: 'Obchodní podmínky', href: '/legal/obchodni-podminky' }, ...base] : base)
+const ADRESA = 'Ke Klíčovu 263/8, Praha 9'
+const MAPS = 'https://maps.google.com/?q=Ke+Kl%C3%AD%C4%8Dovu+263%2F8%2C+Praha+9'
 ---
 
 <!DOCTYPE html>
@@ -37,9 +46,9 @@ const home = props.home ?? 'https://naklicove.cz'
     </main>
   </div>
   <footer class="site">
-    <div>© 2026 [PROVOZOVATEL DOPLNIT] · Ke Kličovu 8, Praha 9</div>
+    <div class="addr">© 2026 [PROVOZOVATEL DOPLNIT] · <a class="pin" href={MAPS} rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>{ADRESA}</a></div>
     <div class="legal">
-      <a href="#">Obchodní podmínky</a>·<a href="#">Ochrana údajů</a>·<a href="#">Cookies</a>
+      {links.map(l => <a href={l.href}>{l.text}</a>)}
     </div>
   </footer>
   <CookieBar />

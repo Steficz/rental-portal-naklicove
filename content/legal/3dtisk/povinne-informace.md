@@ -6,7 +6,7 @@ title: Povinné informace o provozovateli
 
 Název: [JMÉNO]  
 IČO: [IČO]  
-Adresa: Ke Kličovu 8, Praha 9  
+Adresa: Ke Klíčovu 263/8, Praha 9  
 Email: [EMAIL]
 
 ### Obchodní podmínky
