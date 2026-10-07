@@ -1,72 +1,75 @@
-# Nakličové portál
+# naklicove.cz — portální monorepo
 
-Monorepo pro statické weby portálu naklicove.cz.
+Rozcestník **naklicove.cz** a jeho subweby. Bez CMS: veškerý text žije v `content/**.md`,
+úprava obsahu = commit na `main` → Cloudflare Pages sám nasadí.
+Jednotný design „styl C" (brutalismus, JetBrains Mono), subweby se liší jen akcentní barvou.
+
+Lokace: Ke Kličovu 8, Praha 9 · Provozovatelé: viz [docs/obsah-workflow.md](docs/obsah-workflow.md) + `packages/shared/src/legal.js`.
+
+## Weby (6)
+
+| Subdoména | Adresář | CF Pages projekt | Stav |
+|---|---|---|---|
+| naklicove.cz | `sites/root` | `nk-landing` | live rozcestník, 5 dlaždic |
+| 3dtisk.naklicove.cz | `sites/3dtisk` | `nk-3dtisk` | plný web + /cenik + /poptavka |
+| voziky.naklicove.cz | `sites/voziky` | `nk-voziky` | brzy otevřeno |
+| dodavky.naklicove.cz | `sites/dodavky` | `nk-dodavky` | brzy otevřeno, flotila inline |
+| zkusebny.naklicove.cz | `sites/zkusebny` | `nk-zkusebny` | brzy otevřeno |
+| hospoda.naklicove.cz | `sites/hospoda` | `nk-hospoda` | brzy otevřeno |
+
+`upralesa.cz` běží zatím odděleně (WP hosting) — nebude dlaždicí rozcestníku.
+
+## Struktura
+
+```
+├── packages/shared/          # Layout, Card, CookieBar (opt-in §89 ZEK), tokens.css, legal.js
+├── content/
+│   ├── landing/              # uvod.md + sluzby/*.md (1 soubor = 1 dlaždice)
+│   ├── 3dtisk/               # domov.md + cenik.md (strojová data kalkulátoru i ceníku)
+│   └── legal/<provozovatel>/ # 6 právních dokumentů per provozovatel
+├── sites/<web>/              # Astro 5; přidat web = nakopírovat adresář + Pages projekt
+├── tools/check-content.mjs   # CI validace frontmatteru a odkazů
+├── docs/                     # architektura v1/v2, obsah-workflow
+└── .github/workflows/ci.yml  # build+check na každém pushi (deploy dělá Cloudflare)
+```
 
 ## Lokální vývoj
 
-1. Nainstaluj závislosti:
-   ```bash
-   pnpm install
-   ```
-
-2. Spusť vývojový server:
-   ```bash
-   pnpm dev
-   ```
-
-3. Build všech stránek:
-   ```bash
-   pnpm build
-   ```
-
-## Úprava obsahu
-
-Obsah je v adresáři `content/` ve formátu Markdown. Pro úpravu textů:
-
-1. Uprav příslušný `.md` soubor
-2. Commitni změny do Gitu
-3. Pushni na hlavní branch pro automatické nasazení
-
-## Struktura adresářů
-
-```
-sites/
-├── root/          # hlavní portál naklicove.cz
-├── 3dtisk/        # subweb 3dtisk.naklicove.cz
-├── voziky/        # subweb voziky.naklicove.cz
-└── zkusebny/      # subweb zkusebny.naklicove.cz
-
-packages/
-└── shared/        # sdílené komponenty a styly
-
-content/
-├── landing/       # hlavní rozcestník
-│   ├── uvod.md
-│   └── sluzby/
-│       ├── 3dtisk.md
-│       ├── voziky.md
-│       └── zkusebny.md
-├── 3dtisk/        # detailní stránky pro 3D tisk
-│   ├── domov.md
-│   └── cenik.md
-└── legal/         # právní dokumenty
-    └── provozovatel-a/
-        ├── povinne-informace.md
-        ├── obchodni-podminky.md
-        ├── ochrana-osobnich-udaju.md
-        ├── cookies.md
-        ├── odstoupeni.md
-        └── reklamace.md
-```
-
-## Vývoj komponent
-
-Sdílené komponenty jsou v `packages/shared/src/components/`. Používají
-CSS custom properties pro stylování.
-
-## Kontrola obsahu
-
-Spuštění automatické kontroly:
 ```bash
-pnpm check
+nvm use            # Node 22 (viz .nvmrc), packageManager: pnpm@9
+pnpm install
+pnpm dev                          # jen rozcestník
+pnpm -r build                     # všech 6 webů do sites/*/dist
+pnpm check                        # validace obsahu
 ```
+
+## Úprava textů
+
+Viz [docs/obsah-workflow.md](docs/obsah-workflow.md). Zkráceně: uprav `.md` v `content/`,
+pošli PR (Cloudflare dá preview URL), po mergi na main se nasadí samo.
+Ceny 3D tisku se mění **jen** v `content/3dtisk/cenik.md` (frontmatter), nikdy v kódu.
+
+## Nová služba na rozcestníku
+
+1. `.md` soubor do `content/landing/sluzby/` (frontmatter: title, description, href, accent, label)
+2. id přidat do `order` a ikonu do `icons` v `sites/root/src/pages/index.astro`
+3. volitelně nový `sites/<web>/` pro subweb + Pages projekt (build/deploy commands níže)
+4. aktualizovat tento README (tabulka webů + struktura) — **pravidlo: každá změna struktury = update README**
+
+## Deploy — Cloudflare Pages (Git integrace)
+
+Nastavení projektu: Framework Astro, env `NODE_VERSION=22`, proměnná `CLOUDFLARE_ACCOUNT_ID`
+(řetězec z URL dashboardu). Build/deploy příkazy per web:
+
+```
+build:   pnpm --filter @nk/<adresář> build
+deploy:  npx wrangler pages deploy sites/<adresář>/dist --project-name=nk-<projekt>
+```
+
+CI na GitHubu (`ci.yml`) dělá jen kontrolní build; deploy command je práce Cloudflare.
+
+## Plánované (neděláno)
+
+- Kalkulátor STL nabalený na /poptavka (úloha T3: `tasks/T3-stl-kalkulacka.md`)
+- API pro poptávky/rezervace + Google Calendar sync (VPS fáze 2 — viz docs/architecture-v2.md)
+- Právní texty od praxe (T5), doplň `legal.js` placeholdery
