@@ -64,7 +64,7 @@ Ceny 3D tisku se mění **jen** v `content/3dtisk/cenik.md` (frontmatter), nikdy
 ## Deploy — Cloudflare Pages + GitHub Actions
 
 Projekty `nk-landing`, `nk-3dtisk`, `nk-voziky`, `nk-dodavky`, `nk-zkusebny`, `nk-hospoda`
-(účet honzicek69+cloudflare@gmail.com) běží jako **Direct upload** a nasazuje je
+(účet honzic...) běží jako **Direct upload** a nasazuje je
 `.github/workflows/deploy.yml` přes wrangler při každém pushi na main.
 
 Podmínka v GitHub → Settings → Secrets and variables → Actions:
